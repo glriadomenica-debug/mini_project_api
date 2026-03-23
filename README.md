@@ -2,7 +2,7 @@
 
 ## 📌 Deskripsi
 
-Project ini adalah RESTful API sederhana untuk sistem Learning Management System (LMS). API ini dibuat menggunakan **Node.js** dan **Express.js** untuk mengelola data seperti users, categories, dan courses.
+Project ini adalah RESTful API sederhana untuk sistem Learning Management System (LMS). API ini dibuat menggunakan **Node.js** dan **Express.js** untuk mengelola data seperti users, categories dan courses.
 
 ---
 
@@ -36,7 +36,7 @@ mini-project-api/
 ├── router/           # Routing API
 ├── postman/          # File collection Postman
 │   └── mini_project_postman.json
-├── app.js / index.js # Entry point
+├── app.js            # Entry point
 ├── package.json
 └── README.md
 ```
@@ -75,13 +75,13 @@ Contoh:
 DB_HOST=localhost
 DB_USER=root
 DB_PASSWORD=
-DB_NAME=nama_database
+DB_NAME=nama_database_mu
 ```
 
 ### 5. Jalankan Server
 
 ```
-npm start
+npm run dev
 ```
 
 Server akan berjalan di:
