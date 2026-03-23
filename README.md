@@ -8,20 +8,20 @@ Project ini adalah RESTful API sederhana untuk sistem Learning Management System
 
 ## 🚀 Fitur Utama
 
-* ✅ CRUD Users
-* ✅ CRUD Categories
-* ✅ CRUD Courses
-* ✅ Relasi antara Course dan Category
-* ✅ API Testing menggunakan Postman
+- ✅ CRUD Users
+- ✅ CRUD Categories
+- ✅ CRUD Courses
+- ✅ Relasi antara Course dan Category
+- ✅ API Testing menggunakan Postman
 
 ---
 
 ## 🛠️ Teknologi yang Digunakan
 
-* Node.js
-* Express.js
-* MySQL
-* Postman (API Testing)
+- Node.js
+- Express.js
+- MySQL
+- Postman (API Testing)
 
 ---
 
@@ -54,7 +54,7 @@ git clone https://github.com/username/nama-repo.git
 ### 2. Masuk ke Folder Project
 
 ```
-cd nama-repo
+cd nama-repo / nama-project
 ```
 
 ### 3. Install Dependencies
@@ -65,9 +65,9 @@ npm install
 
 ### 4. Setup Database
 
-* Buat database di MySQL
-* Import file SQL (jika ada)
-* Atur konfigurasi di file `.env` atau `config/database.js`
+- Buat database di MySQL atau
+- Import file SQL (yang ada di file database)
+- Atur konfigurasi di file `.env` atau `config/database.js`
 
 Contoh:
 
@@ -75,7 +75,7 @@ Contoh:
 DB_HOST=localhost
 DB_USER=root
 DB_PASSWORD=
-DB_NAME=nama_database_mu
+DB_NAME=lms_db
 ```
 
 ### 5. Jalankan Server
@@ -94,13 +94,29 @@ http://localhost:3000
 
 ## 🔗 Endpoint API
 
+### 📁 Users
+
+- GET `/users` → Ambil semua category
+- GET `/users/:id` → Ambil category berdasarkan ID
+- POST `/users` → Tambah category
+- PUT `/users/:id` → Update category
+- DELETE `/users/:id` → Hapus category
+
 ### 📁 Categories
 
-* GET `/categories` → Ambil semua category
-* GET `/categories/:id` → Ambil category berdasarkan ID
-* POST `/categories` → Tambah category
-* PUT `/categories/:id` → Update category
-* DELETE `/categories/:id` → Hapus category
+- GET `/categories` → Ambil semua category
+- GET `/categories/:id` → Ambil category berdasarkan ID
+- POST `/categories` → Tambah category
+- PUT `/categories/:id` → Update category
+- DELETE `/categories/:id` → Hapus category
+
+### 📁 Courses
+
+- GET `/courses` → Ambil semua category
+- GET `/courses/:id` → Ambil category berdasarkan ID
+- POST `/courses` → Tambah category
+- PUT `/courses/:id` → Update category
+- DELETE `/courses/:id` → Hapus category
 
 ---
 
@@ -120,9 +136,9 @@ postman/mini_project_postman.json
 
 ## ⚠️ Catatan Penting
 
-* Pastikan database sudah terkoneksi dengan benar
-* Jangan upload file `.env` ke GitHub
-* Gunakan `.gitignore` untuk menghindari file sensitif
+- Pastikan database sudah terkoneksi dengan benar
+- Jangan upload file `.env` ke GitHub
+- Gunakan `.gitignore` untuk menghindari file sensitif
 
 ---
 
