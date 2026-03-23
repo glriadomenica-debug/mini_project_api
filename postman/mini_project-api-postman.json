@@ -282,6 +282,26 @@
             }
           },
           "response": []
+        },
+        {
+          "name": "Get courses with relations",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/courses/courses-with-relations",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "courses",
+                "courses-with-relations"
+              ]
+            }
+          },
+          "response": []
         }
       ]
     },
