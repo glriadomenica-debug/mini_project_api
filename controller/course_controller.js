@@ -26,6 +26,18 @@ const course_controller = {
       res.status(500).json({ message: error.message });
     }
   },
+  getAllWithRelation: async (req, res) => {
+    try {
+      const courses = await course_model.findAllWithRelation();
+      res.json({
+        code: 200,
+        message: "Successfully get courses with users & categories",
+        data: courses,
+      });
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  },
   store: async (req, res) => {
     try {
       const { nama_course, price, kuota, id_category, id_users } = req.body;

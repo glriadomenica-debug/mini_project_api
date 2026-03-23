@@ -8,5 +8,4 @@ router.post("/", user.store);
 router.put("/:id", user.update);
 router.delete("/:id", user.destroy);
 
-
 module.exports = router;

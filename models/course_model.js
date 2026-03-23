@@ -10,6 +10,12 @@ const model_course = {
     const [rows] = await pool.query("SELECT * FROM courses WHERE id=?", [id]);
     return rows[0];
   },
+  findAllWithRelation: async () => {
+    const [rows] = await pool.query(
+      "SELECT courses.*, users.nama AS nama_user, categories.nama_category AS nama_category FROM courses JOIN users ON courses.id_users=users.id JOIN categories ON courses.id_category = categories.id",
+    );
+    return rows;
+  },
   store: async (data) => {
     const [rows] = await pool.query("INSERT INTO courses SET ?", [data]);
     return rows;
