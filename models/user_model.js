@@ -1,6 +1,8 @@
 const { pool } = require("../config/database");
 const { update } = require("../controller/user_controller");
 
+
+
 const model_user = {
   findAll: async () => {
     const [rows] = await pool.query("SELECT * FROM users");
