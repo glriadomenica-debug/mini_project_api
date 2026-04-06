@@ -113,5 +113,11 @@ INSERT INTO transactions values
 (7,12, 18, 170000, 'paid', '2026-04-01 22:30:00', 'admin', '2026-04-01 22:30:00', 'admin'),
 (8,13, 20, 500000, 'pending', '2026-04-01 22:30:00', 'admin', '2026-04-01 22:30:00', 'admin');
 
+-- menambahkan kolom password di tabel users
+ALTER TABLE users 
+ADD password VARCHAR(255) NOT NULL AFTER email;
 
-
+-- membuat pw untuk admin saja
+UPDATE users 
+SET password = 'gloriadomenica123456'
+WHERE role = 'admin';
