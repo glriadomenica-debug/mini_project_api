@@ -85,7 +85,7 @@ const authController = {
           token: token,
           user: {
             nama: user.nama,
-            email: user.nama,
+            email: user.email,
           },
         },
       });
