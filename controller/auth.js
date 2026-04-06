@@ -4,7 +4,6 @@ const model_user = require("../models/user_model");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const AppError = require("../utils/appError");
-const model_user = require("../models/user_model");
 
 const authController = {
   registration: async (req, res, next) => {
