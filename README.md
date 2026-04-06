@@ -129,7 +129,7 @@ Gunakan Postman:
 3. Pilih file:
 
 ```
-postman/mini_project_postman.json
+postman/mini_project-api-postman.json
 ```
 
 ---
