@@ -1,6 +1,6 @@
 //change
 const { body } = require("express-validator");
-const AppError = require("../utils/AppError");
+const AppError = require("./utils/AppError");
 const jwt = require("jsonwebtoken");
 
 const validateRegistration = [
