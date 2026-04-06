@@ -34,6 +34,20 @@ foreign key (id_category) references categories(id),
 foreign key (id_users) references users(id)
 );
 
+create table `transactions` (
+`id` int not null AUTO_INCREMENT primary key,
+`id_user` int not null,
+`id_course` int not null,
+`total_price` int not null,
+`status` varchar(50) not null,
+`created_at` datetime not null,
+`created_by` varchar(255) not null,
+`updated_at` datetime not null,
+`update_by` varchar(255) not null,
+FOREIGN KEY (id_user) REFERENCES users(id),
+FOREIGN KEY (id_course) REFERENCES courses(id)
+);
+
 insert into users values (1,'Gloria Domenica','glriadomenica@gmail.com','admin', '2026-03-15 13:33:30','admin','2026-03-15', 'admin');
 
 insert into users values (2,'Nicodemos Pereria','pereira@gmail.com','admin', '2026-03-15 13:45:30','admin','2026-03-15 13:45:30', 'admin'),
