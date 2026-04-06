@@ -20,7 +20,7 @@ create table `categories` (
 );
 
 create table `courses` (
-`id` INT not null primary key,
+`id` INT not null auto_increment primary key,
 `nama_course` VARCHAR(100) not null,
 `price` int not null,
 `kuota` int not null,

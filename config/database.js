@@ -1,3 +1,4 @@
+//Konfigurasi koneksi database MYSQL
 require("dotenv").config();
 const mysql = require("mysql2/promise");
 

@@ -1,3 +1,4 @@
+//Entry point app - Menghubungkan semua router
 //Inisialisasi terlebih dahulu
 const express = require("express");
 //DB connection
@@ -22,5 +23,3 @@ const start = async () => {
 };
 
 start();
-
-

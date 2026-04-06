@@ -19,7 +19,7 @@ const course_controller = {
       const course = await course_model.findById(id);
       res.json({
         code: 200,
-        message: "Succesfully get course",
+        message: "Succesfully get course by ID " + id,
         data: course,
       });
     } catch (error) {
