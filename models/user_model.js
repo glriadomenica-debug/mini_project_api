@@ -1,9 +1,27 @@
 const { pool } = require("../config/database");
 const { update } = require("../controller/user_controller");
 
-
-
 const model_user = {
+  //auth
+  registration: async (data) => {
+    const [rows] = await pool.query("INSERT INTO users SET ?", [data]);
+    return rows;
+  },
+  login: async (data) => {
+    const [rows] = await pool.query(
+      "SELECT * FROM users WHERE email=? AND password=?",
+      [data.email, data.password],
+    );
+    return rows;
+  },
+  findByEmail: async (email) => {
+    const [rows] = await pool.query("SELECT * FROM users WHERE email=?", [
+      email,
+    ]);
+    return rows[0];
+  },
+
+  //crud users
   findAll: async () => {
     const [rows] = await pool.query("SELECT * FROM users");
     return rows;
