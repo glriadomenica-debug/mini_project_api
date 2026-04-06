@@ -2,16 +2,33 @@
 //Inisialisasi terlebih dahulu
 const express = require("express");
 //DB connection
-const { testConnection } = require("./config/database");
 const userRouter = require("./router/users");
 const courseRouter = require("./router/courses");
 const categoryRouter = require("./router/categories");
+const authRouter = require("./router/auth");
+const AppError = require("./utils/app_error");
 
 const app = express();
+const { testConnection } = require("./config/database");
+const errorHandler = require("./middleware/errorHandler");
+
+app.use(cors({ origin: "*"}));
 app.use(express.json());
-app.use("/users", userRouter);
+app.use("/auth", authRouter);
+// app.use("/users", userRouter);
 app.use("/courses", courseRouter);
 app.use("/categories", categoryRouter);
+
+//test endpoiint
+app.get("/test", (req,res)=> {
+  res.json({ message : "CORS OK"});
+});
+
+app.use((req,_res,next) => {
+  next(new AppError(`${req.method} ${req.originalUrl} not found`, 404));
+});
+
+app.use(errorHandler);
 
 //DB
 const start = async () => {
