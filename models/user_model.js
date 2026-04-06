@@ -1,5 +1,4 @@
 const { pool } = require("../config/database");
-const { update } = require("../controller/user_controller");
 
 const model_user = {
   //auth
