@@ -41,6 +41,13 @@ const controller_category = {
   },
   getByID: async (req, res) => {
     try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(400).json({
+          errors: errors.array(),
+        });
+      }
+
       const { id } = req.params;
       const category = await category_model.findById(id);
       res.json({
@@ -49,15 +56,19 @@ const controller_category = {
         data: category,
       });
     } catch (error) {
-      res.status(500).json({ message: error.message });
+      next(error);
     }
   },
-  store: async (req, res) => {
+  store: async (req, res, next) => {
     try {
-      const { nama_category, deskripsi } = req.body;
-      if (!nama_category || !deskripsi) {
-        res.status(400).json({ message: "All field are required!!" });
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(400).json({
+          errrors: errors.array(),
+        });
       }
+      const { nama_category, deskripsi } = req.body;
+
       const data = {
         nama_category: nama_category,
         deskripsi: deskripsi,
@@ -73,19 +84,27 @@ const controller_category = {
         },
       });
     } catch (error) {
-      res.status(500).json({ message: error.message });
+      next(error);
     }
   },
-  update: async (req, res) => {
+  update: async (req, res, next) => {
     try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(400).json({
+          errors: errors.array(),
+        });
+      }
+
       const { id } = req.params;
       const { nama_category, deskripsi } = req.body;
+
       if (!nama_category && !deskripsi) {
-        return res.status(400).json({ message: "All field are required" });
+        throw new AppError("category name and description are required", 400);
       }
       const oldCategory = await category_model.findById(id);
       if (!oldCategory) {
-        return res.status(400).json({ message: "Category not found" });
+        return res.status(400).json({ message: "category not found" });
       }
       const data = {
         nama_category: nama_category
@@ -104,24 +123,32 @@ const controller_category = {
         },
       });
     } catch (error) {
-      res.status(500).json({ message: error.message });
+      next(error);
     }
   },
   destroy: async (req, res) => {
     try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(400).json({
+          errors: errors.array(),
+        });
+      }
+
       const { id } = req.params;
       const category = await category_model.findById(id);
+
       if (!category) {
-        return res.status(400).json({ message: "User not found" });
+        throw new AppError("Category not found", 404);
       }
       await category_model.destroy(id);
       res.json({
         code: 200,
-        message: "Succesfully delete user",
+        message: "Succesfully delete category",
       });
     } catch (error) {
-      res.status(500).json({ message: error.message });
-    }
+      next(error);
+    } 
   },
 };
 module.exports = controller_category;
