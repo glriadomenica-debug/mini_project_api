@@ -27,6 +27,7 @@ const model_category = {
       }
 
       const categories = await category_model.findAll();
+
       await cache.set(CACHE_KEY, JSON.stringify(categories), { EX: 60 });
       res.json({
         code: 200,
@@ -35,7 +36,7 @@ const model_category = {
         data: categories,
       });
     } catch (error) {
-      res.status(500).json({ message: error.message });
+      next(error);
     }
   },
   getByID: async (req, res) => {
