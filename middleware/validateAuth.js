@@ -35,7 +35,10 @@ const validateToken = (req, res, next) => {
     next();
   } catch (error) {
     // next(error);
-    return res.status(401).json({ message : "Invalid Token"})
+    return res.status(401).json({
+      code: 401,
+      message: "Invalid Token",
+    });
   }
 };
 
