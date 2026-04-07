@@ -11,9 +11,7 @@ const validateRegistration = [
     .withMessage("Password harus ada")
     .isLength({ min: 8 })
     .withMessage("Password harus sampai 8 karakter"),
-  body("role") 
-    .notEmpty()
-    .withMessage("Role tidak boleh kosong")
+  body("role").notEmpty().withMessage("Role tidak boleh kosong"),
 ];
 
 const validateLogin = [
@@ -40,4 +38,18 @@ const validateToken = (req, res, next) => {
   }
 };
 
-module.exports = { validateRegistration, validateLogin, validateToken };
+const validateUpdatePassword = [
+  body("email").isEmail().withMessage("Email is required").normalizeEmail(),
+  body("password")
+    .notEmpty()
+    .withMessage("Password is required")
+    .isLength({ min: 8 })
+    .withMessage("Password must be at least 8 characters"),
+];
+
+module.exports = {
+  validateRegistration,
+  validateLogin,
+  validateToken,
+  validateUpdatePassword,
+};

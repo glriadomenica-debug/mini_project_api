@@ -44,6 +44,15 @@ const model_user = {
     const [rows] = await pool.query("DELETE FROM users WHERE id=?", [id]);
     return rows;
   },
+
+  ///tambahin update
+  updatePassword: async (password, id) => {
+    const [rows] = await pool.query(
+      "UPDATE users SET password = ? WHERE id = ?",
+      [password, id],
+    );
+    return rows;
+  },
 };
 
 module.exports = model_user;

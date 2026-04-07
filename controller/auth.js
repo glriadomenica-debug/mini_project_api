@@ -19,7 +19,7 @@ const authController = {
       const { nama, email, password, role } = req.body;
 
       const hashPassword = await bcrypt.hash(password, 10);
-     
+
       const data = {
         nama: nama,
         email: email,
@@ -87,6 +87,64 @@ const authController = {
             email: user.email,
           },
         },
+      });
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  profile: async (req, res, next) => {
+    try {
+      const errors = validationResult(req);
+
+      if (!errors.isEmpty()) {
+        return res.status(400).json({
+          errors: errors.array(),
+        });
+      }
+
+      const user = await model_user.findByEmail(req.user.email);
+
+      res.json({
+        code: 200,
+        message: "Successfully get profile",
+        data: {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          age: user.age,
+        },
+      });
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  //tambahin update pw
+  updatePassword: async (req, res, next) => {
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(400).json({
+          errors: errors.array(),
+        });
+      }
+
+      const email = req.body.email;
+      const password = req.body.password;
+      const newPassword = await bcrypt.hash(password, 10);
+      const checkEmail = await model_user.findByEmail(email);
+      //console.log(checkEmail, "checkEmail");
+      if (!checkEmail) {
+        return res.status(400).json({
+          code: 400,
+          message: "Email is not found",
+        });
+      }
+      await model_user.updatePassword(newPassword, checkEmail.id);
+      res.json({
+        code: 200,
+        message: "Successfully update password",
       });
     } catch (error) {
       next(error);

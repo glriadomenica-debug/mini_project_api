@@ -11,4 +11,14 @@ router.post(
 );
 router.post("/login", validateAuth.validateLogin, authController.login);
 
+router.get("/profile", validateAuth.validateToken, authController.profile);
+
+router.put(
+  "/profile",
+
+  validateAuth.validateToken,
+  validateAuth.validateUpdatePassword,
+  authController.updatePassword,
+);
+
 module.exports = router;
