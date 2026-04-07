@@ -1,13 +1,13 @@
 const category_model = require("../models/category_model");
-const { validateResult } = require("express-validator");
+const { validationResult } = require("express-validator");
 const AppError = require("../utils/appError");
 const cache = require("../config/cache");
 const { json } = require("express");
 
-const model_category = {
-  getAll: async (req, res) => {
+const controller_category = {
+  getAll: async (req, res, next) => {
     try {
-      const errors = validateResult(req);
+      const errors = validationResult(req);
       if (!errors.isEmpty()) {
         return res.status(400).json({
           errors: errors.array(),
@@ -28,7 +28,7 @@ const model_category = {
 
       const categories = await category_model.findAll();
 
-      await cache.set(CACHE_KEY, JSON.stringify(categories), { EX: 60 });
+      cache.set(CACHE_KEY, JSON.stringify(categories), 60);
       res.json({
         code: 200,
         source: "database",
@@ -124,4 +124,4 @@ const model_category = {
     }
   },
 };
-module.exports = model_category;
+module.exports = controller_category;
