@@ -1,20 +1,50 @@
 const course_model = require("../models/course_model");
+const { validationResult } = require("express-validator");
+const AppError = require("../utils/appError");
+const cache = require("../config/cache");
+const { json } = require("express");
 
 const course_controller = {
-  getAll: async (req, res) => {
+  getAll: async (req, res, next) => {
     try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(400).json({
+          errors: errors.array(),
+        });
+      }
+      const CACHE_KEY = "all courses";
+      const cachedData = await cache.get(CACHE_KEY);
+
+      if (cachedData) {
+        return res.json({
+          code: 200,
+          source: "cache",
+          message: "Successfully get courses",
+          data: JSON.parse(cachedData),
+        });
+      }
       const courses = await course_model.findAll();
+
+      cache.set(CACHE_KEY, JSON.stringifly(courses), 60);
       res.json({
         code: 200,
+        source: "database",
         message: "Succesfully get courses",
         data: courses,
       });
     } catch (error) {
-      res.status(500).json({ message: error.message });
+      next(error);
     }
   },
   getByID: async (req, res) => {
     try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(400).json({
+          errors: errors.array(),
+        });
+      }
       const { id } = req.params;
       const course = await course_model.findById(id);
       res.json({
@@ -23,11 +53,17 @@ const course_controller = {
         data: course,
       });
     } catch (error) {
-      res.status(500).json({ message: error.message });
+      next(error);
     }
   },
   getAllWithRelation: async (req, res) => {
     try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(400).json({
+          errors: errors.array(),
+        });
+      }
       const courses = await course_model.findAllWithRelation();
       res.json({
         code: 200,
@@ -35,16 +71,22 @@ const course_controller = {
         data: courses,
       });
     } catch (error) {
-      res.status(500).json({ message: error.message });
+      next(error);
     }
   },
   store: async (req, res) => {
     try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(400).json({
+          errors: errors.array(),
+        });
+      }
       const { nama_course, price, kuota, id_category, id_users } = req.body;
 
-      if (!nama_course || !price || !kuota || !id_category || !id_users) {
-        res.status(400).json({ message: "All field are required!!" });
-      }
+      // if (!nama_course || !price || !kuota || !id_category || !id_users) {
+      //   res.status(400).json({ message: "All field are required!!" });
+      // }
       const data = {
         nama_course: nama_course,
         price: price,
@@ -66,17 +108,24 @@ const course_controller = {
         },
       });
     } catch (error) {
-      res.status(500).json({ message: error.message });
+      next(error);
     }
   },
   update: async (req, res) => {
     try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(400).json({
+          errors: errors.array(),
+        });
+      }
       const { id } = req.params;
       const { nama_course, price, kuota, id_category, id_users } = req.body;
 
       if (!nama_course && !price && !kuota && !id_category && !id_users) {
-        return res.status(400).json({ message: "All field are required" });
+        throw new AppError("All field are required", 400);
       }
+
       const oldDataCourse = await course_model.findById(id);
 
       if (!oldDataCourse) {
@@ -103,24 +152,31 @@ const course_controller = {
         },
       });
     } catch (error) {
-      res.status(500).json({ message: error.message });
+      next(error);
     }
   },
   destroy: async (req, res) => {
     try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(400).json({
+          errors: errors.array(),
+        });
+      }
+
       const { id } = req.params;
       const course = await course_model.findById(id);
 
       if (!course) {
-        return res.status(400).json({ message: "User not found" });
+        throw new AppError("Course not found", 404);
       }
       await course_model.destroy(id);
       res.json({
         code: 200,
-        message: "Successfully delete user",
+        message: "Successfully delete course",
       });
     } catch (error) {
-      res.status(500).json({ message: error.message });
+      next(error);
     }
   },
 };
