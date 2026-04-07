@@ -23,7 +23,7 @@ const validateToken = (req, res, next) => {
   const authHeader = req.headers.authorization;
 
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
-    throw new AppError("Token not found", 401);
+    throw new AppError("You are not authorized", 401);
   }
 
   const token = authHeader.split(" ")[1];
@@ -34,7 +34,8 @@ const validateToken = (req, res, next) => {
     req.user = decodedToken;
     next();
   } catch (error) {
-    next(error);
+    // next(error);
+    return res.status(401).json({ message : "Invalid Token"})
   }
 };
 
