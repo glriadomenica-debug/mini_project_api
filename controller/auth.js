@@ -18,7 +18,7 @@ const authController = {
 
       const { nama, email, password, role } = req.body;
 
-      const hashPassword = await bcrypt.hash(password, 22);
+      const hashPassword = await bcrypt.hash(password, 10);
      
       const data = {
         nama: nama,

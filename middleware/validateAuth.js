@@ -4,18 +4,16 @@ const AppError = require("../utils/appError");
 const jwt = require("jsonwebtoken");
 
 const validateRegistration = [
-  body("name").notEmpty().withMessage("Name is required"),
-  body("email").isEmail().withMessage("Email is required").normalizeEmail(),
+  body("nama").notEmpty().withMessage("Nama harus ada"),
+  body("email").isEmail().withMessage("Email harus ada").normalizeEmail(),
   body("password")
     .notEmpty()
-    .withMessage("Password is required")
-    .isLength({ min: 6 })
-    .withMessage("Password must be at least 6 characters long"),
-  body("age")
+    .withMessage("Password harus ada")
+    .isLength({ min: 8 })
+    .withMessage("Password harus sampai 8 karakter"),
+  body("role") 
     .notEmpty()
-    .withMessage("Age is required")
-    .isNumeric()
-    .withMessage("Age must be a number"),
+    .withMessage("Role tidak boleh kosong")
 ];
 
 const validateLogin = [
