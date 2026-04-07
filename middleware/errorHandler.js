@@ -1,7 +1,8 @@
 require("dotenv").config();
 
 const errorHandler = (err, _req, res, _next) => {
-  const statusCode = res.statusCode ? res.statusCode : 500;
+  // const statusCode = res.statusCode ? res.statusCode : 500;
+    const statusCode = err.statusCode || 500;
 
   if (process.env.MODE === "Development") {
     return res.status(statusCode).json({
