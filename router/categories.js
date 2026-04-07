@@ -6,7 +6,7 @@ const validateAuth = require("../middleware/validateAuth");
 
 router.get("/", validateAuth.validateToken, category.getAll);
 router.get("/:id", validateAuth.validateToken, category.getByID);
-router.post("/", validateAuth.validateToken, category.store);
+router.post("/", validateAuth.validateToken, validateCategory, category.store);
 router.put("/:id", validateAuth.validateToken, category.update);
 router.delete("/:id", validateAuth.validateToken, category.destroy);
 
