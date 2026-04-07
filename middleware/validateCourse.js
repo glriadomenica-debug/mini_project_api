@@ -10,7 +10,7 @@ const validateCourse = [
   body("kuota")
     .notEmpty()
     .withMessage("Kuota is required")
-    .isNumber()
+    .isFloat()
     .withMessage("Must be a number"),
   body("id_category")
     .notEmpty()
