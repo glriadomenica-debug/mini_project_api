@@ -1,13 +1,38 @@
 const category_model = require("../models/category_model");
+const { validateResult } = require("express-validator");
+const AppError = require("../utils/appError");
+const cache = require("../config/cache");
+const { json } = require("express");
 
 const model_category = {
   getAll: async (req, res) => {
     try {
-      const category = await category_model.findAll();
+      const errors = validateResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(400).json({
+          errors: errors.array(),
+        });
+      }
+
+      const CACHE_KEY = "all categories";
+      const cachedData = await cache.get(CACHE_KEY);
+
+      if (cachedData) {
+        return res.json({
+          code: 200,
+          source: "cache",
+          message: "Successfully get categories",
+          data: JSON.parse(cachedData),
+        });
+      }
+
+      const categories = await category_model.findAll();
+      await cache.set(CACHE_KEY, JSON.stringify(categories), { EX: 60 });
       res.json({
         code: 200,
-        message: "Successfully get category",
-        data: category,
+        source: "database",
+        message: "Successfully get categories",
+        data: categories,
       });
     } catch (error) {
       res.status(500).json({ message: error.message });
