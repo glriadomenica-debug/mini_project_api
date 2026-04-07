@@ -7,29 +7,10 @@ const { json } = require("express");
 const course_controller = {
   getAll: async (req, res, next) => {
     try {
-      const errors = validationResult(req);
-      if (!errors.isEmpty()) {
-        return res.status(400).json({
-          errors: errors.array(),
-        });
-      }
-      const CACHE_KEY = "all courses";
-      const cachedData = await cache.get(CACHE_KEY);
-
-      if (cachedData) {
-        return res.json({
-          code: 200,
-          source: "cache",
-          message: "Successfully get courses",
-          data: JSON.parse(cachedData),
-        });
-      }
       const courses = await course_model.findAll();
 
-      cache.set(CACHE_KEY, JSON.stringifly(courses), 60);
       res.json({
         code: 200,
-        source: "database",
         message: "Succesfully get courses",
         data: courses,
       });
@@ -39,12 +20,6 @@ const course_controller = {
   },
   getByID: async (req, res) => {
     try {
-      const errors = validationResult(req);
-      if (!errors.isEmpty()) {
-        return res.status(400).json({
-          errors: errors.array(),
-        });
-      }
       const { id } = req.params;
       const course = await course_model.findById(id);
       res.json({
