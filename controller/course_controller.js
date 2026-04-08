@@ -7,10 +7,25 @@ const { json } = require("express");
 const course_controller = {
   getAll: async (req, res, next) => {
     try {
+      const CACHE_KEY = "all courses";
+      const cachedData = await cache.get(CACHE_KEY);
+
+      if (cachedData) {
+        return res.json({
+          code: 200,
+          source: "cache",
+          message: "Successfully get courses",
+          data: JSON.parse(cachedData),
+        });
+      }
+
       const courses = await course_model.findAll();
+
+      cache.set(CACHE_KEY, JSON.stringify(courses), 60);
 
       res.json({
         code: 200,
+        source: "database",
         message: "Succesfully get courses",
         data: courses,
       });
@@ -50,14 +65,14 @@ const course_controller = {
     }
   },
 
-  getCountInstructor : async (req, res, next) => {
+  getCountInstructor: async (req, res, next) => {
     try {
       const count = await course_model.findInstructorCourseCount();
 
       res.json({
         code: 200,
-        message : "Succesfully get course count per instructor",
-        data : count,
+        message: "Succesfully get course count per instructor",
+        data: count,
       });
     } catch (error) {
       next(error);
