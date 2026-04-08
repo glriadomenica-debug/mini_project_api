@@ -17,7 +17,7 @@ const model_course = {
     return rows;
   },
   findInstructorCourseCount: async () => {
-    const [rows] = await pool.query( "SELECT users.id, users.nama AS instructor_name, COUNT(courses.id) AS total_course FROM users LEFT JOIN courses ON courses.id_users = users.id WHERE users.role = 'instructor GROUP BY users.id, users.nama");
+    const [rows] = await pool.query("SELECT users.id, users.nama AS instructor_name, COUNT(courses.id) AS total_course FROM users LEFT JOIN courses ON courses.id_users = users.id WHERE users.role = 'instructor' GROUP BY users.id, users.nama");
     return rows;
   },
   store: async (data) => {
