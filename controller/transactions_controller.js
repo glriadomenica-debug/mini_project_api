@@ -63,7 +63,7 @@ const transaction_controller = {
     }
   },
 
-  getAllWithRelation: async (req, res) => {
+  getAlltransactionDetails: async (req, res, next) => {
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
