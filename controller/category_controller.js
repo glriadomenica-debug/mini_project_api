@@ -7,13 +7,6 @@ const { json } = require("express");
 const controller_category = {
   getAll: async (req, res, next) => {
     try {
-      const errors = validationResult(req);
-      if (!errors.isEmpty()) {
-        return res.status(400).json({
-          errors: errors.array(),
-        });
-      }
-
       const CACHE_KEY = "all categories";
       const cachedData = await cache.get(CACHE_KEY);
 
@@ -41,13 +34,6 @@ const controller_category = {
   },
   getByID: async (req, res) => {
     try {
-      const errors = validationResult(req);
-      if (!errors.isEmpty()) {
-        return res.status(400).json({
-          errors: errors.array(),
-        });
-      }
-
       const { id } = req.params;
       const category = await category_model.findById(id);
       res.json({
@@ -148,7 +134,7 @@ const controller_category = {
       });
     } catch (error) {
       next(error);
-    } 
+    }
   },
 };
 module.exports = controller_category;
