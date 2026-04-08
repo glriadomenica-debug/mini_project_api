@@ -17,7 +17,7 @@ const model_transactions = {
   },
   findAllWithRelation: async () => {
     const [rows] = await pool.query(
-      "SELECT transactions.*, users.nama AS nama_user, courses.nama_course AS nama_course FROM transactions JOIN courses ON transactions.id_course=courses.id JOIN users ON courses.id_users = users.id",
+      "SELECT transactions.*, users.nama AS nama_user, courses.nama_course AS nama_course FROM transactions JOIN users ON transactions.id_user=users.id JOIN courses ON transactions.id_course = courses.id",
     );
     return rows;
   },
