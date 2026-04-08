@@ -50,7 +50,7 @@ const course_controller = {
     }
   },
 
-  getCountInstructor : async (res, req, next) => {
+  getCountInstructor : async (req, res, next) => {
     try {
       const count = await course_model.findInstructorCourseCount();
 
