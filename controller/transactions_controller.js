@@ -8,12 +8,6 @@ const { getAllWithRelation } = require("./course_controller");
 const transaction_controller = {
   getAll: async (req, res, next) => {
     try {
-      const errors = validationResult(req);
-      if (!errors.isEmpty()) {
-        return res.status(400).json({
-          errors: errors.array(),
-        });
-      }
       const CACHE_KEY = "all transactions";
       const cachedData = await cache.get(CACHE_KEY);
 
@@ -43,13 +37,6 @@ const transaction_controller = {
 
   getById: async (req, res, next) => {
     try {
-      const errors = validationResult(req);
-      if (!errors.isEmpty()) {
-        return res.status(400).json({
-          errors: errors.array(),
-        });
-      }
-
       const { id } = req.params;
       const transaction = await model_transactions.findById(id);
 
