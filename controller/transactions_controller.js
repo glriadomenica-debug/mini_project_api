@@ -3,6 +3,7 @@ const { validationResult } = require("express-validator");
 const AppError = require("../utils/appError");
 const cache = require("../config/cache");
 const { json } = require("express");
+const { getAllWithRelation } = require("./course_controller");
 
 const transaction_controller = {
   getAll: async (req, res, next) => {
@@ -40,12 +41,12 @@ const transaction_controller = {
     }
   },
 
-  getById : async (req,res,next) => {
+  getById: async (req, res, next) => {
     try {
       const errors = validationResult(req);
-      if(!errors.isEmpty()) {
+      if (!errors.isEmpty()) {
         return res.status(400).json({
-          errors : errors.array(),
+          errors: errors.array(),
         });
       }
 
@@ -62,17 +63,36 @@ const transaction_controller = {
     }
   },
 
+  getAllWithRelation: async (req, res) => {
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(400).json({
+          errors: errors.array(),
+        });
+      }
+      const transaction = await model_transactions.findAllWithRelation();
+      res.json({
+        code: 200,
+        message: "Successfully get all transaction details",
+        data: transaction,
+      });
+    } catch (error) {
+      next(error);
+    }
+  },
+
   store: async (req, res, next) => {
     try {
       const errors = validationResult(req);
 
-      if(!errors.isEmpty()) {
+      if (!errors.isEmpty()) {
         return res.status(400).json({
-          errors : errors.array(),
+          errors: errors.array(),
         });
       }
 
-      const {id_user, id_course, total_price, status} = req.body;
+      const { id_user, id_course, total_price, status } = req.body;
 
       const data = {
         id_user: id_user,
@@ -94,7 +114,7 @@ const transaction_controller = {
           status: data.status,
         },
       });
-    } catch(error) {
+    } catch (error) {
       next(error);
     }
   },
@@ -103,7 +123,7 @@ const transaction_controller = {
     try {
       const errors = validationResult(req);
 
-      if(!errors.isEmpty()) {
+      if (!errors.isEmpty()) {
         return res.status(400).json({
           errors: errors.array(),
         });
@@ -112,21 +132,21 @@ const transaction_controller = {
       const { id } = req.params;
       const { id_user, id_course, total_price, status } = req.body;
 
-      if (!id_user && !id_course && !total_price &&!status) {
+      if (!id_user && !id_course && !total_price && !status) {
         throw new AppError("All field are required", 400);
       }
 
       const oldTransaction = await model_transactions.findById(id);
 
-      if(!oldTransaction) {
-        return res.status(404).json({ message : "Transaction not found"});
+      if (!oldTransaction) {
+        return res.status(404).json({ message: "Transaction not found" });
       }
 
       const data = {
         id_user: id_user ? id_user : oldTransaction.id_user,
         id_course: id_course ? id_course : oldTransaction.id_course,
-        total_price : total_price ? total_price : oldTransaction.total_price,
-        status : status ? status : oldTransaction.status,
+        total_price: total_price ? total_price : oldTransaction.total_price,
+        status: status ? status : oldTransaction.status,
       };
 
       await model_transactions.update(id, data);
@@ -134,8 +154,8 @@ const transaction_controller = {
       res.json({
         code: 200,
         message: "Successfully update transaction",
-        data : {
-          id:id,
+        data: {
+          id: id,
           id_user: id_user,
           id_course: id_course,
           total_price: total_price,
@@ -151,22 +171,22 @@ const transaction_controller = {
     try {
       const errors = validationResult(req);
 
-      if(!errors.isEmpty()) {
+      if (!errors.isEmpty()) {
         return res.status(400).json({
-          errors : errors.array(),
+          errors: errors.array(),
         });
       }
 
-      const { id } =req.params;
+      const { id } = req.params;
       const transaction = await model_transactions.findById(id);
 
-      if(!transaction) {
+      if (!transaction) {
         throw new AppError("Transaction not found", 404);
       }
 
       await model_transactions.destroy(id);
       res.json({
-        code:200,
+        code: 200,
         message: "Successfully delete transaction",
       });
     } catch (error) {
@@ -175,5 +195,4 @@ const transaction_controller = {
   },
 };
 
-module.exports = transaction_controller
-
+module.exports = transaction_controller;
