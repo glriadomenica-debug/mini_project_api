@@ -22,3 +22,5 @@ const validateTransaction = [
     .isString()
     .withMessage("'Paid'or'Pending'"),
 ];
+
+module.exports = validateTransaction;
