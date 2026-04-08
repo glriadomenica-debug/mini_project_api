@@ -7,15 +7,18 @@ const validateTransaction = [
     .isInt()
     .withMessage("Must be a number"),
   body("id_course")
-    .notEmpty.withMessage("Course id is required")
+    .notEmpty()
+    .withMessage("Course id is required")
     .isInt()
     .withMessage("Must be a number"),
   body("total_price")
-    .notEmpty.withMessage("Total price is required")
-    .isNumber()
+    .notEmpty()
+    .withMessage("Total price is required")
+    .isFloat()
     .withMessage("Must be a number"),
   body("status")
-    .notEmpty.withMessage("Status is required")
+    .notEmpty()
+    .withMessage("Status is required")
     .isString()
     .withMessage("'Paid'or'Pending'"),
 ];
