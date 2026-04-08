@@ -15,6 +15,12 @@ const model_transactions = {
     const [row] = await pool.query("INSERT INTO transactions SET ?", [data]);
     return row;
   },
+  findAllWithRelation: async () => {
+    const [rows] = await pool.query(
+      "SELECT transactions.*, users.nama AS nama_user, course.nama_course AS nama_course FROM transactions JOIN users ON transactions.id_users=users.id JOIN courses ON transactions.id_course = course.id",
+    );
+    return rows;
+  },
   update: async (id, data) => {
     const [row] = await pool.query("UPDATE transactions SET ? WHERE id=?", [
       data,
