@@ -5,6 +5,7 @@ const express = require("express");
 const userRouter = require("./router/users");
 const courseRouter = require("./router/courses");
 const categoryRouter = require("./router/categories");
+const transactionRouter = require("./router/transactions");
 const authRouter = require("./router/auth");
 const AppError = require("./utils/appError");
 const cors = require("cors");
@@ -16,9 +17,10 @@ const errorHandler = require("./middleware/errorHandler");
 app.use(cors({ origin: "*" }));
 app.use(express.json());
 app.use("/auth", authRouter);
-// app.use("/users", userRouter);
+app.use("/users", userRouter);
 app.use("/courses", courseRouter);
 app.use("/categories", categoryRouter);
+app.use("/transaction", transactionRouter);
 
 //test endpoiint
 app.get("/test", (req, res) => {
