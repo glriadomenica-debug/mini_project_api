@@ -9,6 +9,7 @@ router.get(
   validateAuth.validateToken,
   course.getAllWithRelation,
 );
+router.get("/course-count", validateAuth.validateToken, course.getCountInstructor);
 router.get("/",course.getAll);
 router.get("/:id", course.getByID);
 router.post("/", validateAuth.validateToken, validateCourse, course.store);
