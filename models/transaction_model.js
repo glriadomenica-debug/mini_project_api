@@ -23,9 +23,9 @@ const model_transactions = {
     return row;
   },
   destroy: async (id) => {
-    const [row] = await pool.query("DELETE FROM transactions WHERE id=?",[id]);
+    const [row] = await pool.query("DELETE FROM transactions WHERE id=?", [id]);
     return row;
-  }
+  },
 };
 
 module.exports = model_transactions;
