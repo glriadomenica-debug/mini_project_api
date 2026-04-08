@@ -10,8 +10,8 @@ router.get(
   validateAuth.validateToken,
   transaction.getAlltransactionDetails,
 );
-router.get("/", validateAuth.validateToken, transaction.getAll);
-router.get("/:id", validateAuth.validateToken, transaction.getById);
+router.get("/", transaction.getAll);
+router.get("/:id", transaction.getById);
 router.post("/", validateAuth.validateToken, validateTransaction, transaction.store);
 router.put("/:id", validateAuth.validateToken, transaction.update);
 router.delete("/:id", validateAuth.validateToken, transaction.destroy);
