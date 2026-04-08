@@ -27,3 +27,5 @@ const model_transactions = {
     return row;
   }
 };
+
+module.exports = model_transactions;
