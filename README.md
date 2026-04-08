@@ -1,4 +1,4 @@
-# 📚 Mini Project API - Learning Management System (LMS)
+# 📚 Mini Project Authentication & Testing API - Learning Management System (LMS)
 
 ## 📌 Deskripsi
 
@@ -8,10 +8,13 @@ Project ini adalah RESTful API sederhana untuk sistem Learning Management System
 
 ## 🚀 Fitur Utama
 
+- ✅ Authentication (JWT)
 - ✅ CRUD Users
 - ✅ CRUD Categories
 - ✅ CRUD Courses
-- ✅ Relasi antara Course dan Category
+- ✅ CRUD Transactions
+- ✅ Relasi antar tabel
+- ✅ Caching
 - ✅ API Testing menggunakan Postman
 
 ---
@@ -21,6 +24,8 @@ Project ini adalah RESTful API sederhana untuk sistem Learning Management System
 - Node.js
 - Express.js
 - MySQL
+- Cache
+- JWT Authentication
 - Postman (API Testing)
 
 ---
@@ -76,6 +81,8 @@ DB_HOST=localhost
 DB_USER=root
 DB_PASSWORD=
 DB_NAME=lms_db
+
+JWT_SECRET = secretkey
 ```
 
 ### 5. Jalankan Server
@@ -89,6 +96,15 @@ Server akan berjalan di:
 ```
 http://localhost:3000
 ```
+
+---
+
+## 🔐 Authentication
+
+Gunakan endpoint login :
+POST / auth/login
+Gunakan token di header:
+Authorization : Bearer token
 
 ---
 
@@ -118,6 +134,23 @@ http://localhost:3000
 - PUT `/courses/:id` → Update category
 - DELETE `/courses/:id` → Hapus category
 
+### Relasi
+
+- GET `/courses/with-relations` → Menampilkan course dengan relasi tabel lain
+- GET `/courses/course-count` → Menghitung jumlah course per instructor
+
+### 📁 Transactions
+
+- GET `/transactions` → Ambil semua transactions
+- GET `/transactions/:id` → Ambil transactions berdasarkan ID
+- POST `/transactions` → Tambah transactions
+- PUT `/transactions/:id` → Update transactions
+- DELETE `/transactions/:id` → Hapus transactions
+
+### Relasi
+
+- GET `/transactions/details` → Menampilkan transaksi dengan detail relasi
+
 ---
 
 ## 🧪 Testing API
@@ -129,7 +162,7 @@ Gunakan Postman:
 3. Pilih file:
 
 ```
-postman/mini_project-api-postman.json
+postman/mini_project.postman_collection.json
 ```
 
 ---
