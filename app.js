@@ -20,7 +20,7 @@ app.use("/auth", authRouter);
 app.use("/users", userRouter);
 app.use("/courses", courseRouter);
 app.use("/categories", categoryRouter);
-app.use("/transaction", transactionRouter);
+app.use("/transactions", transactionRouter);
 
 //test endpoiint
 app.get("/test", (req, res) => {
