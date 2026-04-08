@@ -31,7 +31,7 @@ const course_controller = {
       next(error);
     }
   },
-  getAllWithRelation: async (req, res) => {
+  getAllWithRelation: async (req, res, next) => {
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
@@ -44,6 +44,20 @@ const course_controller = {
         code: 200,
         message: "Successfully get courses with users & categories",
         data: courses,
+      });
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  getCountInstructor : async (res, req, next) => {
+    try {
+      const count = await course_model.getCountInstructor();
+
+      res.json({
+        code: 200,
+        message : "Succesfully get course count per instructor",
+        data : count,
       });
     } catch (error) {
       next(error);
