@@ -52,7 +52,7 @@ const course_controller = {
 
   getCountInstructor : async (res, req, next) => {
     try {
-      const count = await course_model.getCountInstructor();
+      const count = await course_model.findInstructorCourseCount();
 
       res.json({
         code: 200,
