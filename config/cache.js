@@ -1,3 +1,4 @@
+//penyimpan data sementara
 const cacheNode = require("node-cache");
 const cache = new cacheNode({
   stdTTL:60,
