@@ -1,3 +1,4 @@
+//mengatur authentication (register, login, profile dan update PW)
 require("dotenv").config();
 const { validationResult } = require("express-validator");
 const model_user = require("../models/user_model");

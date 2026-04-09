@@ -9,7 +9,7 @@ const model_transactions = {
     const [row] = await pool.query("SELECT * from transactions WHERE id=?", [
       id,
     ]);
-    return row;
+    return row[0];
   },
   store: async (data) => {
     const [row] = await pool.query("INSERT INTO transactions SET ?", [data]);

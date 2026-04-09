@@ -6,9 +6,4 @@ const cache = new cacheNode({
   useClones:false,
 });
 
-//method utama
-// cache.set("key","value","ttl");
-// cache.get("key");
-// cache.del("key");
-// cache.flushAll();
 module.exports = cache;

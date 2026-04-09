@@ -5,11 +5,7 @@ const transaction = require("../controller/transactions_controller");
 const validateTransaction = require("../middleware/validateTransaction");
 const validateAuth = require("../middleware/validateAuth");
 
-router.get(
-  "/details",
-  validateAuth.validateToken,
-  transaction.getAlltransactionDetails,
-);
+router.get("/details", validateAuth.validateToken, transaction.getAlltransactionDetails);
 router.get("/", transaction.getAll);
 router.get("/:id", transaction.getById);
 router.post("/", validateAuth.validateToken, validateTransaction, transaction.store);

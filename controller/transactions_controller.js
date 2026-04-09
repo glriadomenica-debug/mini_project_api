@@ -68,7 +68,6 @@ const transaction_controller = {
       next(error);
     }
   },
-
   store: async (req, res, next) => {
     try {
       const errors = validationResult(req);
@@ -106,7 +105,7 @@ const transaction_controller = {
     }
   },
 
-  update: async (res, req, next) => {
+  update: async (req, res, next) => {
     try {
       const errors = validationResult(req);
 
@@ -124,6 +123,7 @@ const transaction_controller = {
       }
 
       const oldTransaction = await model_transactions.findById(id);
+      console.log(oldTransaction, "old");
 
       if (!oldTransaction) {
         return res.status(404).json({ message: "Transaction not found" });
@@ -136,6 +136,9 @@ const transaction_controller = {
         status: status ? status : oldTransaction.status,
       };
 
+      console.log(req.body, "req_body");
+      console.log(data, "data");
+
       await model_transactions.update(id, data);
 
       res.json({
@@ -143,13 +146,14 @@ const transaction_controller = {
         message: "Successfully update transaction",
         data: {
           id: id,
-          id_user: id_user,
-          id_course: id_course,
-          total_price: total_price,
-          status: status,
+          id_user: data.id_user,
+          id_course: data.id_course,
+          total_price: data.total_price,
+          status: data.status,
         },
       });
     } catch (error) {
+      console.log(error);
       next(error);
     }
   },

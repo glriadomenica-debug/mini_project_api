@@ -20,7 +20,7 @@ const validateTransaction = [
     .notEmpty()
     .withMessage("Status is required")
     .isString()
-    .withMessage("'Paid'or'Pending'"),
+    .withMessage("Status must be 'Paid'or'Pending'"),
 ];
 
 module.exports = validateTransaction;
